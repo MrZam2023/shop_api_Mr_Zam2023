@@ -18,14 +18,17 @@ class Product(models.Model):
         return self.title
 
 
-STARS = (
-    [i, i] for i in range(1, 6)
-)
-
+    @property
+    def rating(self):
+        stars = [review.stars for review in self.reviews.all() if review.stars is not None]
+        if not stars:
+            return 0
+        else:
+            return round(sum(stars) / len(stars), 2)
 
 class Review(models.Model):
     text = models.TextField(null=True)
-    stars = models.IntegerField(choices=STARS)
+    stars = models.IntegerField(choices=([i, i ] for i in range(1, 6)), default=0)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="reviews")
 
     def __str__(self):
