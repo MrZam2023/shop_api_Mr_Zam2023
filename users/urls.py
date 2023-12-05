@@ -5,6 +5,8 @@ from .views import *
 from users import views as users_views
 
 urlpatterns = [
-    path('users/register/', users_views.register_api_view),
-    path('users/login/', users_views.login_api_view),
+    path('users/registration/', views.registration_api_view),
+    path('users/confirm/', views.confirm_user_api_view),
+    path('users/authorization/', views.authorization_api_view),
+    path('users/logout/', views.logout),
 ]
